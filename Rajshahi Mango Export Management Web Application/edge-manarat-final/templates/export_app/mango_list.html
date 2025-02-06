@@ -1,0 +1,94 @@
+<!-- templates/export_app/mango_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mango Export List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+      <div class="flex flex-col justify-center items-center">
+        <h2 class="text-4xl font-bold text-center text-green-600 mb-6">
+          Rajshahi Mango Export
+        </h2>
+      </div>
+
+      <div class="flex justify-center items-center">
+        <form method="GET" class="flex items-center space-x-4 mb-6">
+          <input
+            type="text"
+            name="search"
+            placeholder="Search by Order ID"
+            value="{{ query }}"
+            class="w-full md:w-64 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200 ease-in-out"
+          />
+          <button
+            type="submit"
+            class="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200 ease-in-out"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
+      <div class="grid grid-cols-5 p-6">
+        <p>Image</p>
+        <p>Varity</p>
+        <p>Description</p>
+        <p>Price</p>
+        <p>Action</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+        {% for mango in mangoes %}
+        <div
+          class="w-full border border-gray-200 p-2 flex items-center bg-white rounded-lg shadow-md overflow-hidden"
+        >
+          <img
+            src="https://www.frutas-hortalizas.com/img/fruites_verdures/presentacio/18.jpg"
+            alt="Mango"
+            class="w-20 h-20 rounded-full"
+          />
+          <div class="p-4 grid grid-cols-4 justify-between gap-4">
+            <h5 class="text-lg font-semibold uppercase">{{ mango.variety }}</h5>
+            <p class="text-gray-600">{{ mango.description }}</p>
+            <p class="font-bold text-green-700 mt-2">
+              Price: ${{ mango.price }}
+            </p>
+
+            <div class="mt-4 flex space-x-3">
+              <a
+                href="{% url 'mango_update' pk=mango.order_id %}"
+                class="px-4 py-2 bg-blue-500 text-white rounded-md"
+              >
+                Edit
+              </a>
+
+              <a
+                href="{% url 'mango_delete' pk=mango.order_id %}"
+                class="px-4 py-2 bg-red-500 text-white rounded-md"
+              >
+                Delete
+              </a>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-center col-span-2 text-gray-500">
+          No mangoes available.
+        </p>
+        {% endfor %}
+      </div>
+      <div class="text-center mt-6">
+        <a
+          href="{% url 'mango_create' %}"
+          class="px-6 py-3 bg-green-500 text-white rounded-md"
+        >
+          Add New Mango
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
